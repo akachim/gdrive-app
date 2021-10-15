@@ -1,0 +1,22 @@
+ {% extends 'base.html' %}
+
+ {% block contents %}
+ <div class="container row">
+    <ul>
+        {% for file in items %}
+        <!--LOOP THROUGH DICTIONARY-->
+            {% for keys, values in file.items() %}
+            {% if keys == f_name %}
+                <form>
+                    <input type="radio" id="file_name" name="file_name" value="{{ file[keys] }}">
+                    <label for="name">{{ file[keys] }}</label><br>
+                </form>
+            {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </ul>
+    <div class="field">
+        <button class="button is-fullwidth is-rounded is-success">Submit</button>
+    </div>
+</div>
+{% endblock %}
