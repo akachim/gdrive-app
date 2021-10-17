@@ -1,35 +1,16 @@
 {% extends 'base.html' %}
 <!--{% from '_macro.html' import input %} --->
 
-{% block contents %}
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <div>
-      <h3 class="float-md-start mb-0">fCRYPT</h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link active" aria-current="page" href="/">Home</a>
-        <a class="nav-link" href="{{ url_for('download') }}">Download</a>
-      </nav>
-    </div>
-  </header>
-
+{% block page_content %}
   <main class="px-3">
     <h1>Welcome to fCRYPT</h1>
-    <p class="lead">This app helps to securely upload your files to google drive with a strong encryption algorithm</p>
+    <p class="lead">Securely upload your files to google drive with a strong encryption algorithm</p>
     <p class="lead">
       <button type="button" class="btn btn-lg btn-primary fw-bold border-white bg-dark shadow" data-bs-toggle="modal"
        data-bs-target="#load-modal">Upload file</button>
     </p>
     <div class="text-body">
-      {% include 'load.html' %}
+     {% include 'load.html' %}
     </div>
   </main>
-
-  <footer class="mt-auto text-white-50">
-    <p>Home page <a href="#" class="text-white">fCRYPT</a>, by <a href="https://twitter.com/TechCreek" class="text-white">@techreek</a>.</p>
-  </footer>
-</div>
-{% endblock %}
-
-{% block scripts %}
 {% endblock %}

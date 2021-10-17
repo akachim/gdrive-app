@@ -35,17 +35,33 @@
   </style>
   {% endblock %}
 </head>
+
+
 <body class="d-flex h-100 text-center text-white bg-dark" style="background-image: url('/static/unsplash-photo-1.jpg');">
-  {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-  {% for category, message in messages %}
-  <div class="alert alert-{{ category }}">{{ message }}</div>
-  {% endfor %}
-  {% endif %}
-  {% endwith %}
-  <div class="container">
-    {% block contents %}{% endblock %}
-  </div>
+  {% block contents %}
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="mb-auto">
+        <div>
+          <h3 class="float-md-start mb-0">fCRYPT</h3>
+          <nav class="nav nav-masthead justify-content-center float-md-end">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            <a class="nav-link" href="{{ url_for('download') }}">Download</a>
+          </nav>
+        </div>
+      </header>
+
+      {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{ message }}
+        </div>
+      {% endfor %}
+      {% block page_content %}{% endblock %}
+      <footer class="mt-auto text-white-50">
+        <p>Home page <a href="#" class="text-white">fCRYPT</a>, by <a href="https://twitter.com/TechCreek" class="text-white">@techreek</a>.</p>
+      </footer>
+    </div>
+  {% endblock %}
 
   <!-- Optional JavaScript; choose one of the two! -->
 

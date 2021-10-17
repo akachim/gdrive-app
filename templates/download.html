@@ -1,22 +1,29 @@
- {% extends 'base.html' %}
+{% extends 'base.html' %}
 
- {% block contents %}
- <div class="container row">
-    <ul>
-        {% for file in items %}
-        <!--LOOP THROUGH DICTIONARY-->
-            {% for keys, values in file.items() %}
-            {% if keys == f_name %}
-                <form>
-                    <input type="radio" id="file_name" name="file_name" value="{{ file[keys] }}">
-                    <label for="name">{{ file[keys] }}</label><br>
-                </form>
-            {% endif %}
-            {% endfor %}
-        {% endfor %}
-    </ul>
-    <div class="field">
-        <button class="button is-fullwidth is-rounded is-success">Submit</button>
+{% block page_content %}
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="list-check" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+    </symbol>
+</svg>
+<form action="{{ url_for('download') }}" method="POST">
+    <div class="-header">
+        <h1>Please Select File</h1>
     </div>
-</div>
+    <div class="d-flex gap-5 justify-content-center" >
+        <div class="list-group mx-0">
+            {% for file in items %}
+                <label class="form-control list-group-item d-flex gap-5">
+                    <input class="form-check-input flex-shrink-0" type="checkbox" value="{{ file['name'], file['id'] }}" >
+                    <span>
+                        {{ file["name"] }}
+                        <small class="d-block text-muted">{{ file["id"] }}</small>
+                    </span>
+                </label>
+            {% endfor %}
+            <button class="btn btn-primary shadow">Download</button>
+        </div>
+    </div>
+</form>
 {% endblock %}
