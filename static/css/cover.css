@@ -51,3 +51,9 @@ body {
   color: #fff;
   border-bottom-color: #fff;
 }
+
+.cover-bg{
+  background-position: center;
+  background-repeat: inherit;
+  background-image: url('/static/unsplash-photo-1.jpg');
+}

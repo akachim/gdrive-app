@@ -37,9 +37,9 @@
 </head>
 
 
-<body class="d-flex h-100 text-center text-white bg-dark" style="background-image: url('/static/unsplash-photo-1.jpg');">
+<body class=" d-flex h-100 text-center text-white bg-dark cover-bg">
   {% block contents %}
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <main class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
       <header class="mb-auto">
         <div>
           <h3 class="float-md-start mb-0">fCRYPT</h3>
@@ -57,10 +57,13 @@
         </div>
       {% endfor %}
       {% block page_content %}{% endblock %}
+
       <footer class="mt-auto text-white-50">
-        <p>Home page <a href="#" class="text-white">fCRYPT</a>, by <a href="https://twitter.com/TechCreek" class="text-white">@techreek</a>.</p>
+        <p>Home page <a href="#" class="text-white">fCRYPT</a>, by <a href="https://twitter.com/TechCreek" class="text-white">@techreek</a>
+        </p>
+        <span>&copy;2021 &trade;ChristiesLab </span>
       </footer>
-    </div>
+    </main>
   {% endblock %}
 
   <!-- Optional JavaScript; choose one of the two! -->

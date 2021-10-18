@@ -14,8 +14,8 @@
     <div class="d-flex gap-5 justify-content-center" >
         <div class="list-group mx-0">
             {% for file in items %}
-                <label class="form-control list-group-item d-flex gap-5">
-                    <input class="form-check-input flex-shrink-0" type="checkbox" value="{{ file['name'], file['id'] }}" >
+                <label class="form-control list-group-item d-flex gap-5 text-white bg-dark">
+                    <input class="form-check-input flex-shrink-0" type="checkbox" value="{{ file['name'], file['id'] }}" name="files">
                     <span>
                         {{ file["name"] }}
                         <small class="d-block text-muted">{{ file["id"] }}</small>

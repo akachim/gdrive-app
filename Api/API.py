@@ -9,7 +9,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
 from google.oauth2.credentials import Credentials
-
+import json
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
@@ -48,9 +48,10 @@ def FileDownload(file_id, file_name):
             status, done = downloader.next_chunk()
             fh.seek(0)
             # Write the received data to the file
+
             with open(file_name, 'wb') as f:
                 shutil.copyfileobj(fh, f)
-                print("File Downloaded")
+                #print("File Downloaded")
                 # Return True if file Downloaded successfully
                 return True
     except:
@@ -60,23 +61,55 @@ def FileDownload(file_id, file_name):
 
 
 def GetFileList():
-    results = service.files().list(
-        pageSize=10, fields="files(id, name)").execute()
+    if os.path.exists('folder_id.txt'):
+        f= open('folder_id.txt')
+        folder_id = f.read()
+    else:
+        print("You have not created any files")
+
+    query=f"parents= '{folder_id}' "
+
+    results = service.files().list(q=query, orderBy='ModifiedTime desc',
+        pageSize=10, fields="NextPageToken files(id, name)").execute()
     items = results.get('files', [])
     return items
 
 
 
 def FileUpload(filepath):
+
+    if os.path.exists('folder_id.txt'):
+        f=open('folder_id.txt', 'r')
+        folder_id = f.read()
+    else:
+        #creating a folder named 'HashedFiles'
+        folder_metadata={
+            "name":"HashedFiles",
+            "mimeType":"application/vnd.google-apps.folder"
+        }
+
+        folder = service.files().create(body=folder_metadata, fields='id').execute()
+
+
+        folder_id = folder.get('id')
+
+        with open('folder_id.txt','w') as f:
+            f.write(folder_id)
+
+
     # Extract the file name out of the file path
     name = filepath.split('/')[-1]
 		# Find the MimeType of the file
     mimetype = MimeTypes().guess_type(name)[0]
     # create file metadata
-    file_metadata = {'name': name}
+    file_metadata = {
+        'name': name,
+        'parents':[folder_id]
+
+    }
 
     try:
-        media = MediaFileUpload(filepath, mimetype=mimetype)
+        media = MediaFileUpload(filepath, mimetype=mimetype, resumable=True)
         # Create a new file in the Drive storage
         file =service.files().create(
             body=file_metadata, media_body=media, fields='id').execute()

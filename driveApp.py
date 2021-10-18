@@ -49,7 +49,7 @@ def index():
 			uploaded_file.save(folder_path)
 
 			if form.validate_on_submit:
-				#API.authenticate()
+				API.authenticate()
 				#getting the list of the file in the folder
 				files=os.listdir(app.config['UPLOAD_PATH'])
 
@@ -73,18 +73,18 @@ def index():
 	
 @app.route('/download', methods=['GET','POST'])
 def download():
-	#items= #API.GetFileList()
-	
-	items=[{'id': '1srtAtR52s0g8xnMrkmuMzqs-en_L2M5n', 'name': 'cam18May2021151632.png'},
-    {'id': '1GGSF-zvXfWHs5Kcvgth31zirPcIf9VEE', 'name': 'Flask_Web_Development_Developing_Web_Applications_With_Python_by_Miguel_Grinberg_z-lib.org.pdf'}, 
-    {'id': '18XnZNpMIbaYdMDEPfnnA32RnDuxpkd0u', 'name': 'gweb.py'}, 
-    {'id': '1sRsS3-Is3lyBM3d6guANoTKF_lQB8JK3', 'name': 'drive-app.py'}, 
-    {'id': '1TffJSWw2sLlPMuCKJWcAWDPlyaNHIj1E', 'name': 'download-upload-drive.py'}, 
-    {'id': '1idAzrd7u0k-cq-Q60JoWcw-dV4aoGxpp', 'name': 'Copy of Welcome To Colaboratory'}, 
-    {'id': '1atsG_EyQSbney1d2hXW5j2KqN1X-Vk3nFuYNKOdI5Wk', 'name': 'COBWEB Manual'}, 
-    {'id': '14-aM0cUj7006GqzSxsKpq2Blv8o9MuDYk0iooWk9c28', 'name': 'Copy of COBWEB Manual'}, 
-    {'id': '1161YKuTmcMfvjxWBF74IQ6JWg_rAtqBN', 'name': 'COBWEB-Literature review'}, 
-    {'id': '1zA6Kj4Cx_oYAT1EycCqNow7gHYMdFLYg', 'name': 'me.jpg'}]
+	API.authenticate()
 
+	items= API.GetFileList()
+	
+	if request.method=='POST':
+		files= request.form.getlist('files')
+		for file in files:
+			f_name= file[0]
+			f_id = file[1]
+			API.FileDownload(f_id, f_name)
+			
+		flash('Files Downloaded successfully')	
+		return redirect(url_for('index'))
 
 	return render_template("download.html", items=items)
